@@ -33,7 +33,10 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+           
         </Grid.RowDefinitions>
-        <Button x:Name="BnTask" Click="BnTask_Click" Content="Задача" Grid.Row="0"></Button>
+        
+        <Button x:Name="BnTask" Click="BnTask_Click" Content="Задача" Grid.Row="14"></Button>
+        <Button x:Name="toWindowBtn" Click="toWindowBtn_Click" Content="Мартынов Максим Задача" Grid.Row="9"></Button>
     </Grid>
 </Window>

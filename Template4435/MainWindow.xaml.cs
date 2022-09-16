@@ -27,7 +27,11 @@ namespace Template4435
 
         private void BnTask_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("Автор: Сабиров Зульфат Зуфарович","4435_Сабиров_Зульфат");
+        }
+        private void toWindowBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Мартынов Максим Дмитриевич, 19 лет, группа_4435","4435_Мартынов");
         }
     }
 }
