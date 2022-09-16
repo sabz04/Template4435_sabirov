@@ -27,7 +27,7 @@ namespace Template4435
 
         private void BnTask_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("Автор: Сабиров Зульфат Зуфарович","4435_Сабиров_Зульфат");
         }
     }
 }
