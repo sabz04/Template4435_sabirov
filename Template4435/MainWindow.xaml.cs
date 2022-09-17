@@ -33,5 +33,13 @@ namespace Template4435
         {
             MessageBox.Show("Мартынов Максим Дмитриевич, 19 лет, группа_4435","4435_Мартынов");
         }
+        private void AzatBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Автор: Хакимзянов Азат Гайсович", "4435_Хакимзянов_Азат");
+        }
+        private void BnnTask_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Автор: Назмутдинов Рузаль Ильгизович", "4435_Назмутдинов_Рузаль");
+        }
     }
 }
