@@ -29,5 +29,10 @@ namespace Template4435
         {
             MessageBox.Show("Автор: Сабиров Зульфат Зуфарович","4435_Сабиров_Зульфат");
         }
+
+        private void BnnTask_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Автор: Назмутдинов Рузаль Ильгизович", "4435_Назмутдинов_Рузаль");
+        }
     }
 }
