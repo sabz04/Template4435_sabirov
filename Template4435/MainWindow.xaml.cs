@@ -41,5 +41,15 @@ namespace Template4435
         {
             MessageBox.Show("Автор: Назмутдинов Рузаль Ильгизович", "4435_Назмутдинов_Рузаль");
         }
+
+        private void BtnCHELNY_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("ЕРКАШОВ 4435");
+        }
+
+        private void BtnNikita_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("КРАВЧЕНКО 4435");
+        }
     }
 }
