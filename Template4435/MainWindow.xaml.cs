@@ -44,12 +44,12 @@ namespace Template4435
 
         private void BtnCHELNY_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("ЕРКАШОВ 4435");
+            MessageBox.Show("ЕРКАШОВ 4435 19", "4435_ЕРКАШОВ");
         }
 
         private void BtnNikita_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("КРАВЧЕНКО 4435");
+            MessageBox.Show("КРАВЧЕНКО 4435 16", "4435_КРАВЧЕНКО");
         }
     }
 }
