@@ -41,5 +41,10 @@ namespace Template4435
         {
             MessageBox.Show("Автор: Назмутдинов Рузаль Ильгизович", "4435_Назмутдинов_Рузаль");
         }
+
+        private void LR1_Shumilkin_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Автор: Шумилкин Александр Олегович", "4435_Шумилкин_Александр");
+        }
     }
 }
