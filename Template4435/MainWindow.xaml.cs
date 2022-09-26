@@ -53,5 +53,10 @@ namespace Template4435
         {
             MessageBox.Show("Автор: Шумилкин Александр Олегович", "4435_Шумилкин_Александр");
         }
+
+        private void Maximov_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Автор: Максимов Роман Сергеевич", "4435_Максимов_Роман");
+        }
     }
 }
