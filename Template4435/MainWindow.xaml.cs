@@ -58,5 +58,10 @@ namespace Template4435
         {
             MessageBox.Show("Автор: Максимов Роман Сергеевич", "4435_Максимов_Роман");
         }
+
+        private void Adieva_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Автор: Адиева Айгуль Ринатовна", "4435_Адиева_Айгуль");
+        }
     }
 }
