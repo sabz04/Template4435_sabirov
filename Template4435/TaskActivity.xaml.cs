@@ -49,6 +49,26 @@ namespace Template4435
 
             Excel_Entity data_str = GetData_ToString_FromXL(ofd.FileName);
 
+            using (DataModelContainer excelEntity = new DataModelContainer())
+            {
+                for (int i = 0; i < data_str.rows; i++)
+                {
+                    excelEntity.ExcelDataSet.Add(new ExcelData()
+                    {
+                         Id = i,
+                         OrderCode = data_str.data[i, 1],
+                         Date = data_str.data[i, 2],
+                         Time = data_str.data[i, 3],
+                         UserCode = data_str.data[i, 4],
+                         Services = data_str.data[i, 5],
+                         Status = data_str.data[i,6],
+                         DateofClose = data_str.data[i, 7],
+
+                    }); 
+                }
+                excelEntity.SaveChanges();
+            }
+
             var msg = "";
             for(int i = 0; i < data_str.rows; i++)
             {
