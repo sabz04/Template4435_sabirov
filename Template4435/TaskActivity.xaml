@@ -47,6 +47,23 @@
                 <Image Source="./Appearance/import.png"/>
             </Button>
         </WrapPanel>
+        <StackPanel
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Grid.Column="1">
+            <TextBlock
+                Foreground="#E96D52"
+                FontSize="18"
+            TextAlignment="Center"
+            FontFamily="./Fonts/#WellwaitFree"
+            TextWrapping="Wrap"
+                
+                >
+            
+            База данных не создается автоматически!! Не забудьте создать ее через ADO.net.
+            </TextBlock>
+
+        </StackPanel>
         
         <WrapPanel
             Margin="0,0,30,0"
@@ -60,6 +77,7 @@
             >
                 <Image Source="./Appearance/excel.png"/>
             </Button>
+            
             <Button 
             
             x:Name="exportWordBTN"
