@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
-
+using Word = Microsoft.Office.Interop.Word;
 
 namespace Template4435
 {
@@ -236,8 +236,78 @@ namespace Template4435
             {
                 excel_data = db.ExcelDataSet.ToList();
             }
-            var list_times = excel_data.Select(x => DateTime.Parse(x.CreateTime.ToString())).Distinct().OrderBy(x=>x).ToList();
-           
+            var list_times = excel_data.Select(x => DateTime.Parse(x.CreateDate.ToString()).ToShortDateString()).Distinct().OrderBy(x=>x).ToList();
+
+            var app = new Word.Application();
+
+            
+            Word.Document document = app.Documents.Add();
+            int counter = 0;
+            for (int j=0; j< list_times.Count(); j++)
+            {
+                Word.Paragraph paragraph = document.Paragraphs.Add();
+                Word.Range range = paragraph.Range;
+                range.Text = list_times[j].ToString();
+                paragraph.set_Style("Заголовок 1");
+                range.InsertParagraphAfter();
+
+                Word.Paragraph tableParagraph = document.Paragraphs.Add();
+                Word.Range tableRange = tableParagraph.Range;
+
+                Word.Table excel_dataTable =
+document.Tables.Add(tableRange, excel_data.Select(x => DateTime.Parse(x.CreateDate).ToShortDateString().ToString()).Where(x => range.Text.Contains(x)).ToList().Count() + 1, 4);
+                int i = 1;
+                foreach (var item in excel_data)
+                {
+                    string list_Dt_str = DateTime.Parse(item.CreateDate).ToShortDateString().ToString();
+                    if (range.Text.Contains(list_Dt_str))
+                    {
+                        
+                        excel_dataTable.Borders.InsideLineStyle =
+                        excel_dataTable.Borders.OutsideLineStyle =
+                        Word.WdLineStyle.wdLineStyleSingle;
+                        excel_dataTable.Range.Cells.VerticalAlignment =
+                        Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+                        Word.Range cellRange = excel_dataTable.Cell(1, 1).Range;
+
+                        cellRange.Text = "ID";
+                        cellRange = excel_dataTable.Cell(1, 2).Range;
+                        cellRange.Text = "Код заказа";
+                        cellRange = excel_dataTable.Cell(1, 3).Range;
+                        cellRange.Text = "Код клиента";
+                        cellRange = excel_dataTable.Cell(1, 4).Range;
+                        cellRange.Text = "Услуги";
+
+                        excel_dataTable.Rows[1].Range.Bold = 1;
+                        excel_dataTable.Rows[1].Range.ParagraphFormat.Alignment =
+                        Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                        cellRange = excel_dataTable.Cell(i + 1, 1).Range;
+                        cellRange.Text = item.Id.ToString();
+                        cellRange.ParagraphFormat.Alignment =
+                        Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                        cellRange = excel_dataTable.Cell(i + 1, 2).Range;
+                        cellRange.Text = item.CodeOrder;
+                        cellRange.ParagraphFormat.Alignment =
+                        Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                        cellRange = excel_dataTable.Cell(i + 1, 3).Range;
+                        cellRange.Text = item.CodeClient;
+                        cellRange.ParagraphFormat.Alignment =
+                        Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                        cellRange = excel_dataTable.Cell(i + 1, 4).Range;
+                        cellRange.Text = item.Services;
+                        cellRange.ParagraphFormat.Alignment =
+                        Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        i++;
+                    }
+                }
+            }
+
+
+            app.Visible = true;
         }
     }
 }
