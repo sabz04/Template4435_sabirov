@@ -29,21 +29,46 @@
         <Button
             x:Name="exitBTN"
             Click="exitBTN_Click"
-            Grid.Column ="0" 
+            Grid.Column ="0"
+            Grid.Row="2"
             >
             Назад
         </Button>
-        <Button
+        <WrapPanel
+            
+            Grid.Column ="0"  
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right">
+            <Button
             x:Name="importBTN"
             Click="importBTN_Click"
-            Grid.Column ="1"  
-            >Импорт</Button>
-
-        <Button 
-            Grid.Column="2" 
+            
+            >
+                <Image Source="./Appearance/import.png"/>
+            </Button>
+        </WrapPanel>
+        
+        <WrapPanel
+            Margin="0,0,30,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Grid.Column="2" >
+            <Button 
+            
             x:Name="exportBTN"
             Click="exportBTN_Click" 
-            >Экспорт</Button>
+            >
+                <Image Source="./Appearance/excel.png"/>
+            </Button>
+            <Button 
+            
+            x:Name="exportWordBTN"
+            Click="exportWordBTN_Click" 
+            >
+                <Image Source="./Appearance/word.png"/>
+            </Button>
+        </WrapPanel>
+        
         <ScrollViewer
             Grid.ColumnSpan="3"
             Grid.Row="1"

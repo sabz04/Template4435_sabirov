@@ -13,14 +13,14 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="OrderCode" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Date" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Time" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="UserCode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CodeOrder" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreateDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreateTime" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CodeClient" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Services" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="DateofClose" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="RentalTime" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ClosedDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ProkatTime" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -34,14 +34,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Name="OrderCode" Type="String" Nullable="false" />
-          <Property Name="Date" Type="String" Nullable="false" />
-          <Property Name="Time" Type="String" Nullable="false" />
-          <Property Name="UserCode" Type="String" Nullable="false" />
+          <Property Name="CodeOrder" Type="String" Nullable="false" />
+          <Property Name="CreateDate" Type="String" Nullable="false" />
+          <Property Name="CreateTime" Type="String" Nullable="false" />
+          <Property Name="CodeClient" Type="String" Nullable="false" />
           <Property Name="Services" Type="String" Nullable="false" />
           <Property Name="Status" Type="String" Nullable="false" />
-          <Property Name="DateofClose" Type="String" Nullable="false" />
-          <Property Name="RentalTime" Type="String" Nullable="false" />
+          <Property Name="ClosedDate" Type="String" Nullable="false" />
+          <Property Name="ProkatTime" Type="String" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -53,14 +53,14 @@
       <EntityTypeMapping TypeName="IsTypeOf(DataModel.ExcelData)">
         <MappingFragment StoreEntitySet="ExcelDataSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="Time" ColumnName="Time" />
-          <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+          <ScalarProperty Name="CodeOrder" ColumnName="CodeOrder" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="CodeClient" ColumnName="CodeClient" />
           <ScalarProperty Name="Services" ColumnName="Services" />
           <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="DateofClose" ColumnName="DateofClose" />
-          <ScalarProperty Name="RentalTime" ColumnName="RentalTime" />
+          <ScalarProperty Name="ClosedDate" ColumnName="ClosedDate" />
+          <ScalarProperty Name="ProkatTime" ColumnName="ProkatTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

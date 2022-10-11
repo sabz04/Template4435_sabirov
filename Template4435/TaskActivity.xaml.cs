@@ -1,8 +1,10 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
+
 
 namespace Template4435
 {
@@ -25,13 +28,18 @@ namespace Template4435
         public TaskActivity()
         {
             InitializeComponent();
+            Refresh();
+        }
+        
+        private void Refresh()
+        {
             using (DataModelContainer db = new DataModelContainer())
             {
+                excelGrid.Items.Clear();
+                excelGrid.ItemsSource = null;
                 excelGrid.ItemsSource = db.ExcelDataSet.ToList();
             }
         }
-
-
 
         private void exitBTN_Click(object sender, RoutedEventArgs e)
         {
@@ -46,18 +54,26 @@ namespace Template4435
             {
                 if (excelEntity.ExcelDataSet.Count() > 0)
                 {
-                    MessageBox.Show("Очистите базу данных для предтовращения дальнейших ошибок.");
+                    MessageBox.Show("Очистите базу данных для предотвращения дальнейших ошибок.");
                     return;
                 }
             }
             OpenFileDialog ofd = new OpenFileDialog()
             {
-                DefaultExt = "*.xls;*.xlsx",
-                Filter = "файл Excel (Spisok.xlsx)|*.xlsx",
+                DefaultExt = "*.xls;*.xlsx;*.json",
+                Filter = "файл Excel (Spisok.xlsx)|*.xlsx|Json files (*.json)|*.json|Text files (*.txt)|*.txt",
                 Title = "Выберите файл базы данных"
             };
             if (!(ofd.ShowDialog() == true))
                 return;
+
+            if (ofd.FileName.Contains("json"))
+            {
+                MessageBox.Show($"{ofd.FileName}");
+
+                GetDataFrom_Json(ofd.FileName);
+                return;
+            }
 
 
             Excel_Entity data_str = GetData_ToString_FromXL(ofd.FileName);
@@ -71,14 +87,14 @@ namespace Template4435
                     excelEntity.ExcelDataSet.Add(new ExcelData()
                     {
                         Id = i,
-                        OrderCode = data_str.data[i, 1],
-                        Date = data_str.data[i, 2],
-                        Time = data_str.data[i, 3],
-                        UserCode = data_str.data[i, 4],
+                        CodeOrder = data_str.data[i, 1],
+                        CreateDate = data_str.data[i, 2],
+                        CreateTime = data_str.data[i, 3],
+                        CodeClient = data_str.data[i, 4],
                         Services = data_str.data[i, 5],
                         Status = data_str.data[i, 6],
-                        DateofClose = data_str.data[i, 7],
-                        RentalTime = data_str.data[i, 8],
+                        ClosedDate = data_str.data[i, 7],
+                        ProkatTime = data_str.data[i, 8],
 
                     });
                 }
@@ -86,19 +102,28 @@ namespace Template4435
                 excelGrid.ItemsSource = excelEntity.ExcelDataSet.ToList();
             }
 
-            var msg = "";
-            for (int i = 0; i < data_str.rows; i++)
-            {
-                for (int j = 0; j < data_str.columns; j++)
-                {
-                    msg += data_str.data[i, j] + " \t ";
-                }
-                msg += "\n";
 
-            }
-            MessageBox.Show(msg);
         }
+        private void GetDataFrom_Json(string file)
+        {
+            List<ExcelData> datas = new List<ExcelData>();
+            using (FileStream fs = new FileStream(file, FileMode.OpenOrCreate))
+            {
+                datas = JsonSerializer.Deserialize<List<ExcelData>>(fs);
+                
+            }
+            using(DataModelContainer db = new DataModelContainer())
+            {
+                foreach(var item in datas)
+                {
+                    db.ExcelDataSet.Add(item);
+                }
+                db.SaveChanges();
+                Refresh();
+            }
 
+        }
+       
         private Excel_Entity GetData_ToString_FromXL(string url)
         {
             string[,] list;
@@ -132,7 +157,8 @@ namespace Template4435
                 ent;
         }
 
-        public class Excel_Entity {
+        public class Excel_Entity
+        {
             public int rows { get; set; }
             public int columns { get; set; }
             public string[,] data { get; set; }
@@ -168,15 +194,15 @@ namespace Template4435
             {
                 excel_data = db.ExcelDataSet.ToList();
             }
-            var list_times = excel_data.Select(x => x.RentalTime).Distinct().ToList();
+            var list_times = excel_data.Select(x => x.ProkatTime).Distinct().ToList();
             list_times.RemoveAt(0);
 
 
             var app = new Excel.Application();
             app.SheetsInNewWorkbook = list_times.Count();
             Excel.Workbook workbook = app.Workbooks.Add(Type.Missing);
-            
-            for(int i =0; i< list_times.Count(); i++)
+
+            for (int i = 0; i < list_times.Count(); i++)
             {
                 Excel.Worksheet worksheet = app.Worksheets.Item[i + 1];
                 worksheet.Name = Convert.ToString(list_times[i]);
@@ -190,19 +216,30 @@ namespace Template4435
                 j = 2;
                 foreach (var item in excel_data)
                 {
-                    if(item.RentalTime == worksheet.Name)
+                    if (item.ProkatTime == worksheet.Name)
                     {
                         worksheet.Cells[1][j] = item.Id;
-                        worksheet.Cells[2][j] = item.OrderCode;
-                        worksheet.Cells[3][j] = item.Date;
-                        worksheet.Cells[4][j] = item.UserCode;
+                        worksheet.Cells[2][j] = item.CodeOrder;
+                        worksheet.Cells[3][j] = item.CreateTime;
+                        worksheet.Cells[4][j] = item.CodeClient;
                         worksheet.Cells[5][j] = item.Services;
                         j++;
                     }
-   
                 }
             }
             app.Visible = true;
-        } 
+        }
+
+        private void exportWordBTN_Click(object sender, RoutedEventArgs e)
+        {
+            using (var db = new DataModelContainer())
+            {
+                excel_data = db.ExcelDataSet.ToList();
+            }
+            var list_times = excel_data.Select(x => DateTime.Parse(x.CreateTime.ToString())).Distinct().OrderBy(x=>x).ToList();
+           
+        }
     }
 }
+
+

@@ -15,13 +15,13 @@ namespace Template4435
     public partial class ExcelData
     {
         public int Id { get; set; }
-        public string OrderCode { get; set; }
-        public string Date { get; set; }
-        public string Time { get; set; }
-        public string UserCode { get; set; }
+        public string CodeOrder { get; set; }
+        public string CreateDate { get; set; }
+        public string CreateTime { get; set; }
+        public string CodeClient { get; set; }
         public string Services { get; set; }
         public string Status { get; set; }
-        public string DateofClose { get; set; }
-        public string RentalTime { get; set; }
+        public string ClosedDate { get; set; }
+        public string ProkatTime { get; set; }
     }
 }
