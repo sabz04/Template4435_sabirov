@@ -199,22 +199,10 @@ namespace Template4435
                         worksheet.Cells[5][j] = item.Services;
                         j++;
                     }
-                    
-                    
+   
                 }
-
-
-
-
-                //worksheet.Cells[1][1] = "Id";
-                //worksheet.Cells[2][1] = "Код заказа";
-                //worksheet.Cells[3][1] = "Дата создания";
-                //worksheet.Cells[4][1] = "Код клиента";
-                //worksheet.Cells[5][1] = "Услуги";
-
-
             }
-            workbook.SaveAs(@".\" + "Datassssss" + ".xlsx");
+            app.Visible = true;
         } 
     }
 }
