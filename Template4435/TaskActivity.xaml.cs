@@ -21,6 +21,7 @@ namespace Template4435
     /// </summary>
     public partial class TaskActivity : Window
     {
+        public List<ExcelData> excel_data;
         public TaskActivity()
         {
             InitializeComponent();
@@ -29,8 +30,8 @@ namespace Template4435
                 excelGrid.ItemsSource = db.ExcelDataSet.ToList();
             }
         }
-        
-        
+
+
 
         private void exitBTN_Click(object sender, RoutedEventArgs e)
         {
@@ -60,7 +61,7 @@ namespace Template4435
 
 
             Excel_Entity data_str = GetData_ToString_FromXL(ofd.FileName);
-           
+
             using (DataModelContainer excelEntity = new DataModelContainer())
             {
                 for (int i = 0; i < data_str.rows; i++)
@@ -69,28 +70,28 @@ namespace Template4435
                         continue;
                     excelEntity.ExcelDataSet.Add(new ExcelData()
                     {
-                         Id = i,
-                         OrderCode = data_str.data[i, 1],
-                         Date = data_str.data[i, 2],
-                         Time = data_str.data[i, 3],
-                         UserCode = data_str.data[i, 4],
-                         Services = data_str.data[i, 5],
-                         Status = data_str.data[i,6],
-                         DateofClose = data_str.data[i, 7],
-                         RentalTime = data_str.data[i, 8],
+                        Id = i,
+                        OrderCode = data_str.data[i, 1],
+                        Date = data_str.data[i, 2],
+                        Time = data_str.data[i, 3],
+                        UserCode = data_str.data[i, 4],
+                        Services = data_str.data[i, 5],
+                        Status = data_str.data[i, 6],
+                        DateofClose = data_str.data[i, 7],
+                        RentalTime = data_str.data[i, 8],
 
-                    }); 
+                    });
                 }
                 excelEntity.SaveChanges();
                 excelGrid.ItemsSource = excelEntity.ExcelDataSet.ToList();
             }
-            
+
             var msg = "";
-            for(int i = 0; i < data_str.rows; i++)
+            for (int i = 0; i < data_str.rows; i++)
             {
                 for (int j = 0; j < data_str.columns; j++)
                 {
-                    msg += data_str.data[i, j]+" \t ";
+                    msg += data_str.data[i, j] + " \t ";
                 }
                 msg += "\n";
 
@@ -127,7 +128,7 @@ namespace Template4435
             ObjWorkExcel.Quit();
             GC.Collect();
 
-            return 
+            return
                 ent;
         }
 
@@ -135,7 +136,7 @@ namespace Template4435
             public int rows { get; set; }
             public int columns { get; set; }
             public string[,] data { get; set; }
-           
+
         }
 
         private void clearBTN_Click(object sender, RoutedEventArgs e)
@@ -147,7 +148,7 @@ namespace Template4435
                     foreach (var row in db.ExcelDataSet)
                     {
                         db.ExcelDataSet.Remove(row);
-                        
+
                     }
                     db.SaveChanges();
                     excelGrid.ItemsSource = null;
@@ -155,10 +156,65 @@ namespace Template4435
                 }
                 MessageBox.Show("Готово!");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("Ошибка! Возможно, все уже и так пусто!"+ ex.Message);
+                MessageBox.Show("Ошибка! Возможно, все уже и так пусто!" + ex.Message);
             }
         }
+
+        private void exportBTN_Click(object sender, RoutedEventArgs e)
+        {
+            using (var db = new DataModelContainer())
+            {
+                excel_data = db.ExcelDataSet.ToList();
+            }
+            var list_times = excel_data.Select(x => x.RentalTime).Distinct().ToList();
+            list_times.RemoveAt(0);
+
+
+            var app = new Excel.Application();
+            app.SheetsInNewWorkbook = list_times.Count();
+            Excel.Workbook workbook = app.Workbooks.Add(Type.Missing);
+            
+            for(int i =0; i< list_times.Count(); i++)
+            {
+                Excel.Worksheet worksheet = app.Worksheets.Item[i + 1];
+                worksheet.Name = Convert.ToString(list_times[i]);
+
+                int j = 1;
+                worksheet.Cells[1][j] = "ID";
+                worksheet.Cells[2][j] = "Код заказа";
+                worksheet.Cells[3][j] = "Дата создания";
+                worksheet.Cells[4][j] = "Код клиента";
+                worksheet.Cells[5][j] = "Услуги";
+                j = 2;
+                foreach (var item in excel_data)
+                {
+                    if(item.RentalTime == worksheet.Name)
+                    {
+                        worksheet.Cells[1][j] = item.Id;
+                        worksheet.Cells[2][j] = item.OrderCode;
+                        worksheet.Cells[3][j] = item.Date;
+                        worksheet.Cells[4][j] = item.UserCode;
+                        worksheet.Cells[5][j] = item.Services;
+                        j++;
+                    }
+                    
+                    
+                }
+
+
+
+
+                //worksheet.Cells[1][1] = "Id";
+                //worksheet.Cells[2][1] = "Код заказа";
+                //worksheet.Cells[3][1] = "Дата создания";
+                //worksheet.Cells[4][1] = "Код клиента";
+                //worksheet.Cells[5][1] = "Услуги";
+
+
+            }
+            workbook.SaveAs(@".\" + "Datassssss" + ".xlsx");
+        } 
     }
 }

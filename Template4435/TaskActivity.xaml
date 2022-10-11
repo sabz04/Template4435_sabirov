@@ -41,6 +41,8 @@
 
         <Button 
             Grid.Column="2" 
+            x:Name="exportBTN"
+            Click="exportBTN_Click" 
             >Экспорт</Button>
         <ScrollViewer
             Grid.ColumnSpan="3"
