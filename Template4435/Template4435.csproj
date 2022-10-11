@@ -209,6 +209,8 @@
     <Resource Include="Appearance\word.png" />
     <Resource Include="Appearance\excel.png" />
     <Resource Include="Appearance\import.png" />
+    <Resource Include="Appearance\icon.jpg" />
+    <Resource Include="Appearance\icon2.png" />
     <Content Include="DataModel.edmx.sql" />
     <Content Include="DataModel1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
