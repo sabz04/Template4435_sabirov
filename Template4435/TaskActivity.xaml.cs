@@ -24,6 +24,10 @@ namespace Template4435
         public TaskActivity()
         {
             InitializeComponent();
+            using (DataModelContainer db = new DataModelContainer())
+            {
+                excelGrid.ItemsSource = db.ExcelDataSet.ToList();
+            }
         }
         
         
@@ -37,6 +41,14 @@ namespace Template4435
 
         private void importBTN_Click(object sender, RoutedEventArgs e)
         {
+            using (DataModelContainer excelEntity = new DataModelContainer())
+            {
+                if (excelEntity.ExcelDataSet.Count() > 0)
+                {
+                    MessageBox.Show("Очистите базу данных для предтовращения дальнейших ошибок.");
+                    return;
+                }
+            }
             OpenFileDialog ofd = new OpenFileDialog()
             {
                 DefaultExt = "*.xls;*.xlsx",
@@ -48,11 +60,13 @@ namespace Template4435
 
 
             Excel_Entity data_str = GetData_ToString_FromXL(ofd.FileName);
-
+           
             using (DataModelContainer excelEntity = new DataModelContainer())
             {
                 for (int i = 0; i < data_str.rows; i++)
                 {
+                    if (data_str.data[i, 1] == "" || data_str.data[i, 1] == " ")
+                        continue;
                     excelEntity.ExcelDataSet.Add(new ExcelData()
                     {
                          Id = i,
@@ -63,12 +77,14 @@ namespace Template4435
                          Services = data_str.data[i, 5],
                          Status = data_str.data[i,6],
                          DateofClose = data_str.data[i, 7],
+                         RentalTime = data_str.data[i, 8],
 
                     }); 
                 }
                 excelEntity.SaveChanges();
+                excelGrid.ItemsSource = excelEntity.ExcelDataSet.ToList();
             }
-
+            
             var msg = "";
             for(int i = 0; i < data_str.rows; i++)
             {
@@ -120,6 +136,29 @@ namespace Template4435
             public int columns { get; set; }
             public string[,] data { get; set; }
            
+        }
+
+        private void clearBTN_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (DataModelContainer db = new DataModelContainer())
+                {
+                    foreach (var row in db.ExcelDataSet)
+                    {
+                        db.ExcelDataSet.Remove(row);
+                        
+                    }
+                    db.SaveChanges();
+                    excelGrid.ItemsSource = null;
+                    excelGrid.Items.Clear();
+                }
+                MessageBox.Show("Готово!");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Ошибка! Возможно, все уже и так пусто!"+ ex.Message);
+            }
         }
     }
 }

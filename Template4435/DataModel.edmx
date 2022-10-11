@@ -20,6 +20,7 @@
     <Property Name="Services" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
     <Property Name="DateofClose" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="RentalTime" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -40,6 +41,7 @@
           <Property Name="Services" Type="String" Nullable="false" />
           <Property Name="Status" Type="String" Nullable="false" />
           <Property Name="DateofClose" Type="String" Nullable="false" />
+          <Property Name="RentalTime" Type="String" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -58,6 +60,7 @@
           <ScalarProperty Name="Services" ColumnName="Services" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="DateofClose" ColumnName="DateofClose" />
+          <ScalarProperty Name="RentalTime" ColumnName="RentalTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

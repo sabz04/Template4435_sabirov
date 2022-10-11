@@ -19,10 +19,12 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition/>
             <ColumnDefinition/>
+
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="71*"/>
-            <RowDefinition Height="513*"/>
+            <RowDefinition Height="452*"/>
+            <RowDefinition Height="61*"/>
         </Grid.RowDefinitions>
         <Button
             x:Name="exitBTN"
@@ -34,11 +36,33 @@
         <Button
             x:Name="importBTN"
             Click="importBTN_Click"
-            Grid.Column ="1" 
+            Grid.Column ="1"  
             >Импорт</Button>
+
         <Button 
             Grid.Column="2" 
             >Экспорт</Button>
-
+        <ScrollViewer
+            Grid.ColumnSpan="3"
+            Grid.Row="1"
+            >
+            <StackPanel
+            
+            >
+                <DataGrid
+                x:Name="excelGrid"
+                
+                ></DataGrid>
+            </StackPanel>
+        </ScrollViewer>
+        
+        <Button
+            x:Name="clearBTN"
+            Click="clearBTN_Click"
+            Grid.Column ="2" 
+            Grid.Row="2"
+            >
+            Очистить базу данных
+        </Button>
     </Grid>
 </Window>

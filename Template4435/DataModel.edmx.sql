@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/10/2022 20:56:13
+-- Date Created: 10/10/2022 22:54:14
 -- Generated from EDMX file: E:\Sabirov2ISRPO\Template4435_sabirov\Template4435\DataModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [C:\USERS\GAMER1070\DOCUMENTS\EXCELDATADB.MDF];
+USE [C:\USERS\GAMER1070\DOCUMENTS\EXCELDB.MDF];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -22,6 +22,9 @@ GO
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[ExcelDataSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ExcelDataSet];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -36,7 +39,8 @@ CREATE TABLE [dbo].[ExcelDataSet] (
     [UserCode] nvarchar(max)  NOT NULL,
     [Services] nvarchar(max)  NOT NULL,
     [Status] nvarchar(max)  NOT NULL,
-    [DateofClose] nvarchar(max)  NOT NULL
+    [DateofClose] nvarchar(max)  NOT NULL,
+    [RentalTime] nvarchar(max)  NOT NULL
 );
 GO
 

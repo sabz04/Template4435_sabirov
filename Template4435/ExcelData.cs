@@ -22,5 +22,6 @@ namespace Template4435
         public string Services { get; set; }
         public string Status { get; set; }
         public string DateofClose { get; set; }
+        public string RentalTime { get; set; }
     }
 }
